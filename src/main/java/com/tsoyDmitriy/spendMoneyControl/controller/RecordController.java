@@ -22,12 +22,24 @@ public class RecordController {
         this.recordService = recordService;
     }
 
-    @GetMapping("recordPage/add/{userid}/{target}/{amount}/{comment}")
-    public @ResponseBody Record addRecord(@PathVariable("target") String target,
-                     @PathVariable("amount") long amount,
-                     @PathVariable("comment") String comment,
-                     @PathVariable("userid") long id) {
-        recordService.saveRecord(target, amount, comment, id);
-        return recordService.findAll();
+    @GetMapping("personRecords")
+    public String getAllRecordsForPerson(Model model) {
+        model.addAttribute("title", "Все траты пользователя");
+        return "personRecords";
     }
+
+    @GetMapping("addRecord")
+    public String viewRecordPage(Model model) {
+        model.addAttribute("title", "Запись об оплате");
+        return "addRecord";
+    }
+
+//    @GetMapping("recordPage/add/{userid}/{target}/{amount}/{comment}")
+//    public @ResponseBody Record addRecord(@PathVariable("target") String target,
+//                     @PathVariable("amount") long amount,
+//                     @PathVariable("comment") String comment,
+//                     @PathVariable("userid") long id) {
+//        recordService.saveRecord(target, amount, comment, id);
+//        return recordService.findAll();
+//    }
 }

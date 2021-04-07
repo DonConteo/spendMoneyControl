@@ -8,15 +8,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RecordService {
-
-    @Autowired
-    RecordRepo recordRepo;
-
-    public void saveRecord(String target, long amount, String comment, long person) {
-        Record record = new Record(target, amount, comment, person);
-        record.setRecord_target(target);
-        record.setRecord_amount(amount);
-        record.setRecord_comment(comment);
-
-    }
 }

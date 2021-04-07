@@ -2,35 +2,101 @@ package com.tsoyDmitriy.spendMoneyControl.model;
 
 import javax.persistence.*;
 
+import com.tsoyDmitriy.spendMoneyControl.domain.Role;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "person_table")
-public class Person {
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long person_id;
+    private Long id;
 
-    private String person_name;
-    private String person_surname;
+    private String name;
+    private String surname;
+    private String password;
 
-    public Long getPerson_id() {
-        return person_id;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "roles")
+    private Set<Role> roles = new HashSet<>();
+
+    public Long getId() {
+        return id;
     }
-    public void setPerson_id(Long person_id) {
-        this.person_id = person_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getPerson_name() {
-        return person_name;
+    public String getName() {
+        return name;
     }
-    public void setPerson_name(String person_name) {
-        this.person_name = person_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPerson_surname() {
-        return person_surname;
+    public String getSurname() {
+        return surname;
     }
-    public void setPerson_surname(String person_surname) {
-        this.person_surname = person_surname;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private Collection<? extends GrantedAuthority> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public Person(String name, String surname, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+    }
+
+    public Person() {
     }
 }

@@ -29,12 +29,12 @@ public class PersonController {
         return personService.getPerson(id);
     }
 
-    @GetMapping("add/{name}/{surname}")
-    public @ResponseBody List<Person> addNewPerson (@PathVariable(value = "name") String name,
-                                                    @PathVariable(value = "surname") String surname) {
-        personService.savePerson(name, surname);
-        return personService.findAll();
-    }
+//    @GetMapping("add/{name}/{surname}")
+//    public @ResponseBody List<Person> addNewPerson (@PathVariable(value = "name") String name,
+//                                                    @PathVariable(value = "surname") String surname) {
+//        personService.savePerson(name, surname);
+//        return personService.findAll();
+//    }
 
 //    @GetMapping("update/{id}/{name}/{surname}")
 //    public @ResponseBody Optional<Person> updatePerson (@PathVariable(value = "id") long id,
