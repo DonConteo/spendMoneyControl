@@ -25,8 +25,8 @@ public class PersonService {
 
     public void savePerson(String name, String surname){
         Person person = new Person();
-        person.setName(name);
-        person.setSurname(surname);
+        person.setPerson_name(name);
+        person.setPerson_surname(surname);
         personRepo.save(person);
     }
 
