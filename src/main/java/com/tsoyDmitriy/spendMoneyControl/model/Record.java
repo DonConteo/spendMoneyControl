@@ -3,26 +3,20 @@ package com.tsoyDmitriy.spendMoneyControl.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "record_table")
+@Table(name = "records")
 public class Record {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    String target;
-    long amount;
+    String purpose;
+    double amount;
     String comment;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "person_id")
-    private Person person;
-
-    public Record(String target, long amount, String comment, Person person) {
-        this.target = target;
-        this.amount = amount;
-        this.comment = comment;
-        this.person = person;
-    }
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public long getId() {
         return id;
@@ -31,17 +25,18 @@ public class Record {
         this.id = id;
     }
 
-    public String getTarget() {
-        return target;
+    public String getPurpose() {
+        return purpose;
     }
-    public void setTarget(String target) {
-        this.target = target;
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
-    public void setAmount(long amount) {
+
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -52,10 +47,20 @@ public class Record {
         this.comment = comment;
     }
 
-    public Person getPerson() {
-        return person;
+    public User getUser() {
+        return user;
     }
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(User user) {
+        this.user = user;
+    }
+
+    public Record(String purpose, double amount, String comment, User user) {
+        this.purpose = purpose;
+        this.amount = amount;
+        this.comment = comment;
+        this.user = user;
+    }
+
+    public Record() {
     }
 }

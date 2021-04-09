@@ -11,20 +11,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "person_table")
-public class Person implements UserDetails {
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-    private String surname;
+    private String username;
     private String password;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "roles")
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
@@ -34,39 +33,27 @@ public class Person implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getUsername() {
+        return username;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    private Collection<? extends GrantedAuthority> getRoles() {
-        return roles;
-    }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    private Collection<? extends GrantedAuthority> getRoles() {
+        return roles;
     }
 
     @Override
@@ -78,25 +65,19 @@ public class Person implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Person(String name, String surname, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-    }
-
-    public Person() {
     }
 }

@@ -1,34 +1,29 @@
 package com.tsoyDmitriy.spendMoneyControl.controller;
 
-import com.tsoyDmitriy.spendMoneyControl.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.tsoyDmitriy.spendMoneyControl.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("registration")
 public class RegistrationController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    UserService userService;
 
-    PersonService personService;
-
-    public RegistrationController(PersonService personService) {
-        this.personService = personService;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String registration(){
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping
-    public String savePerson(String name, String surname, String password){
-        personService.savePerson(name, surname, password);
+    public String saveUser(String username, String password){
+        userService.saveUser(username, password);
         return "redirect:/login";
     }
 }

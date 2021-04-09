@@ -9,7 +9,7 @@
     <form th:action="@{/addRecord}" method="POST">
         <div>
             <p>Назначение платежа</p>
-            <input name="target" type="text" size="40">
+            <input name="purpose" type="text" size="40">
             <p>Сумма</p>
             <input name="amount" type="text" size="40">
             <p>Комментарий</p>
@@ -17,6 +17,9 @@
             <p><input type="submit" value="Отправить">
                 <input type="reset" value="Очистить"></p>
         </div>
+    </form>
+    <form action="logout" method="POST">
+        <input type="submit" value="Выйти">
     </form>
 </body>
 </html>

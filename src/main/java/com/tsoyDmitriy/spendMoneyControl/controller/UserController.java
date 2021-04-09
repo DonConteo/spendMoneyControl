@@ -1,33 +1,59 @@
 package com.tsoyDmitriy.spendMoneyControl.controller;
 
-import com.tsoyDmitriy.spendMoneyControl.model.Person;
-import com.tsoyDmitriy.spendMoneyControl.service.PersonService;
+import com.tsoyDmitriy.spendMoneyControl.model.User;
+import com.tsoyDmitriy.spendMoneyControl.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-@RequestMapping("person")
-public class PersonController {
+@RequestMapping("user")
+public class UserController {
 
-    PersonService personService;
+    UserService userService;
 
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("getall")
-    public @ResponseBody Iterable<Person> getAllPerson() {
-        return personService.findAll();
+    public @ResponseBody Iterable<User> getAllPerson() {
+        return userService.findAll();
     }
 
-    @GetMapping("findbyid/{id}")
-    public @ResponseBody
-    Optional<Person> findById (@PathVariable(value = "id") long id) {
-        return personService.getPerson(id);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//    @GetMapping("findbyid/{id}")
+//    public @ResponseBody
+//    Optional<Person> findById (@PathVariable(value = "id") long id) {
+//        return personService.getPerson(id);
+//    }
 
 //    @GetMapping("add/{name}/{surname}")
 //    public @ResponseBody List<Person> addNewPerson (@PathVariable(value = "name") String name,
@@ -43,16 +69,11 @@ public class PersonController {
 //        personService.updatePerson(id, name, surname);
 //        return personService.getPerson(id);
 //    }
-
-    @GetMapping("delete/{id}")
-    public @ResponseBody List<Person> deletePerson (@PathVariable(value = "id") long id) {
-        personService.deletePerson(id);
-        return personService.findAll();
-    }
-
-    @GetMapping("deleteall")
-    public @ResponseBody List<Person> deleteAllPerson() {
-        personService.deleteAll();
-        return personService.findAll();
-    }
+//
+//    @GetMapping("delete/{id}")
+//    public @ResponseBody List<Person> deletePerson (@PathVariable(value = "id") long id) {
+//        personService.deletePerson(id);
+//        return personService.findAll();
+//    }
+//
 }

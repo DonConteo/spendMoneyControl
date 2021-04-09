@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"/>
+</head>
+
+<body>
+<a>Здравствуйте, <span th:text="${user}"></span></a>
+    <div th:each="elem : ${records}">
+        <p th:text="${elem.purpose}"></p>
+        <strong><a th:text="${elem.amount}"></a></strong>
+        <p th:text="${elem.comment}"></p>
+    </div>
+<form action="logout" method="POST">
+    <input type="submit" value="Выйти">
+</form>
+</body>
+</html>
