@@ -26,7 +26,7 @@ public class RecordController {
     @GetMapping("records")
     public String showAllRecords(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());
-        model.addAttribute("records", recordRepo.findAll());
+        model.addAttribute("records", recordRepo.getRecordsForUser(user.getId()));
         return "records";
     }
 
@@ -44,21 +44,3 @@ public class RecordController {
         return "redirect:/records";
     }
 }
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("recordPage/add/{userid}/{target}/{amount}/{comment}")
-//    public @ResponseBody Record addRecord(@PathVariable("target") String target,
-//                     @PathVariable("amount") long amount,
-//                     @PathVariable("comment") String comment,
-//                     @PathVariable("userid") long id) {
-//        recordService.saveRecord(target, amount, comment, id);
-//        return recordService.findAll();
-//    }
