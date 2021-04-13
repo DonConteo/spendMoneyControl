@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("records")
 public class RecordController {
 
     @Autowired
@@ -23,10 +22,11 @@ public class RecordController {
         this.recordService = recordService;
     }
 
-    @GetMapping("records")
+    @GetMapping()
     public String showAllRecords(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());
-        model.addAttribute("records", recordRepo.getRecordsForUser(user.getId()));
+        model.addAttribute("records", recordService.getRecordsForUser(user.getId()));
+        model.addAttribute("sumThisMonth", recordService.spendThisMonth(user.getId()));
         return "records";
     }
 
@@ -41,6 +41,13 @@ public class RecordController {
                             @RequestParam double amount,
                             @RequestParam String comment) {
         recordService.saveRecord(purpose, amount, comment, user);
+        return "redirect:/records";
+    }
+
+    @PostMapping("delete/{id}")
+    public String deleteRecord(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
+        recordService.deleteRecord(id);
+        model.addAttribute("records", recordRepo.getRecordsForUser(user.getId()));
         return "redirect:/records";
     }
 }

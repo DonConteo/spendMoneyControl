@@ -11,10 +11,16 @@
         <p th:text="${elem.purpose}"></p>
         <strong><a th:text="${elem.amount}"></a></strong>
         <p th:text="${elem.comment}"></p>
+        <form th:action="'/records' + '/delete/' + ${elem.id}" method="POST">
+            <input type="submit" value="Удалить">
+        </form>
     </div>
 <form action="logout" method="POST">
     <input type="submit" value="Выйти">
 </form>
-<a href="addRecord">Добавить запись</a>
+<div>
+    <a th:text="${sumThisMonth}"></a>
+</div>
+<a href="records/addRecord">Добавить запись</a>
 </body>
 </html>

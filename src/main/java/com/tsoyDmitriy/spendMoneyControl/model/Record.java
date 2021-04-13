@@ -1,6 +1,7 @@
 package com.tsoyDmitriy.spendMoneyControl.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "records")
@@ -13,6 +14,7 @@ public class Record {
     String purpose;
     double amount;
     String comment;
+    Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -35,7 +37,6 @@ public class Record {
     public double getAmount() {
         return amount;
     }
-
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -52,6 +53,13 @@ public class Record {
     }
     public void setPerson(User user) {
         this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Record(String purpose, double amount, String comment, User user) {

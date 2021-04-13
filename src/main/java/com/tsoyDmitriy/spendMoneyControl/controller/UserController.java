@@ -3,12 +3,13 @@ package com.tsoyDmitriy.spendMoneyControl.controller;
 import com.tsoyDmitriy.spendMoneyControl.model.User;
 import com.tsoyDmitriy.spendMoneyControl.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("users")
 public class UserController {
 
     UserService userService;
@@ -17,9 +18,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("getall")
-    public @ResponseBody Iterable<User> getAllPerson() {
-        return userService.findAll();
+    @GetMapping()
+    public String getAllUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "users";
+    }
+
+    @PostMapping("delete/{id}")
+    public String deleteUser(@PathVariable(value = "id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/user";
     }
 
 

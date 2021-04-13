@@ -1,6 +1,6 @@
 package com.tsoyDmitriy.spendMoneyControl.service;
 
-import com.tsoyDmitriy.spendMoneyControl.domain.Role;
+import com.tsoyDmitriy.spendMoneyControl.model.Role;
 import com.tsoyDmitriy.spendMoneyControl.model.User;
 import com.tsoyDmitriy.spendMoneyControl.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class UserService implements UserDetailsService {

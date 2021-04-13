@@ -1,4 +1,4 @@
-package com.tsoyDmitriy.spendMoneyControl.domain;
+package com.tsoyDmitriy.spendMoneyControl.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

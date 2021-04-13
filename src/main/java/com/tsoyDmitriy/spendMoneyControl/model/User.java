@@ -2,7 +2,6 @@ package com.tsoyDmitriy.spendMoneyControl.model;
 
 import javax.persistence.*;
 
-import com.tsoyDmitriy.spendMoneyControl.domain.Role;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 
