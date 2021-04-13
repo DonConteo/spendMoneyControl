@@ -27,16 +27,60 @@ public class RecordService {
     }
 
     public List<Record> getRecordsForUser(long id) {
-        List<Record> list = new ArrayList<>(recordRepo.getRecordsForUser(id));
-        return list;
+        List<Record> records = new ArrayList<>(recordRepo.getRecordsForUser(id));
+        return records;
     }
 
     public double spendThisMonth(long id) {
-        List<Double> list = new ArrayList<>(recordRepo.getSumThisMonth(id));
-        double sum = 0;
-        for (double i : list) {
-            sum += i;
+        double spendThisMonth;
+        try {
+            spendThisMonth = recordRepo.getSumThisMonth(id);
+        } catch (Exception e) {
+            spendThisMonth = 0;
         }
-        return sum;
+        return spendThisMonth;
+    }
+
+    public double spendLastMonth(long id) {
+        double spendLastMonth;
+        try {
+            spendLastMonth = recordRepo.getSumLastMonth(id);
+        } catch (Exception e) {
+            spendLastMonth = 0;
+        }
+        return spendLastMonth;
+    }
+
+    public double getPlannedSpends(long id) {
+        double spendLastMonth;
+        try {
+            spendLastMonth = recordRepo.getSumLastMonth(id);
+        } catch (Exception e) {
+            spendLastMonth = 0;
+        }
+
+        double spendLastSecondMonth;
+        try {
+            spendLastSecondMonth = recordRepo.getSumLastSecondMonth(id);
+        } catch (Exception e) {
+            spendLastSecondMonth = 0;
+        }
+
+        double spendLastThirdMonth;
+        try {
+            spendLastThirdMonth = recordRepo.getSumLastThirdMonth(id);
+        } catch (Exception e) {
+            spendLastThirdMonth = 0;
+        }
+
+        double averageSum = spendLastMonth + spendLastSecondMonth + spendLastThirdMonth;
+
+        if (spendLastThirdMonth == 0 && spendLastSecondMonth == 0) {
+            return averageSum;
+        }
+        if (spendLastThirdMonth == 0) {
+            return averageSum/2;
+        }
+        else return averageSum/3;
     }
 }

@@ -19,7 +19,12 @@
     <input type="submit" value="Выйти">
 </form>
 <div>
+    <a>Траты за текущий месяц</a>
     <a th:text="${sumThisMonth}"></a>
+    <a>Траты за прошлый месяц</a>
+    <a th:text="${sumLastMonth}"></a>
+    <a>Предполагаемые траты на конец текущего месяца</a>
+    <a th:text="${plannedSpends}"></a>
 </div>
 <a href="records/addRecord">Добавить запись</a>
 </body>

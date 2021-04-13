@@ -27,6 +27,8 @@ public class RecordController {
         model.addAttribute("user", user.getUsername());
         model.addAttribute("records", recordService.getRecordsForUser(user.getId()));
         model.addAttribute("sumThisMonth", recordService.spendThisMonth(user.getId()));
+        model.addAttribute("sumLastMonth", recordService.spendLastMonth(user.getId()));
+        model.addAttribute("plannedSpends", recordService.getPlannedSpends(user.getId()));
         return "records";
     }
 
