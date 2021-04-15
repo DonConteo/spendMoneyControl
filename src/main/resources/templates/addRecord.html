@@ -9,9 +9,35 @@
     <form th:action="@{addRecord}" method="POST">
         <div>
             <p>Назначение платежа</p>
-            <input name="purpose" type="text" size="40">
-            <p>Сумма</p>
-            <input name="amount" type="text" size="40">
+            <p><select name="purpose" required>
+                <option label="Выберите категорию"></option>
+                <option value="Продукты питания">Продукты питания</option>
+                <option value="Косметика">Косметика</option>
+                <option value="Салоны красоты/парикмахерские">Салоны красоты/парикмахерские</option>
+                <option value="Товары для дома">Товары для дома</option>
+                <option value="Бытовая химия">Бытовая химия</option>
+                <option value="Спорт">Спорт</option>
+                <option value="Автомобиль (товары для автомобиля)">Автомобиль (товары для автомобиля)</option>
+                <option value="Товары для домашних животных">Товары для домашних животных</option>
+                <option value="Табак">Табак</option>
+                <option value="Алкоголь">Алкоголь</option>
+                <option value="Общественный транспорт">Общественный транспорт</option>
+                <option value="Бензин">Бензин</option>
+                <option value="Такси">Такси</option>
+                <option value="Кафе/рестораны">Кафе/рестораны</option>
+                <option value="Одежда">Одежда</option>
+                <option value="Украшения">Украшения</option>
+                <option value="Развлечения">Развлечения</option>
+                <option value="Подарки">Подарки</option>
+                <option value="Аренда нежилых помещений">Аренда нежилых помещений</option>
+                <option value="Аренда жилья/коммунальные услуги">Аренда жилья/коммунальные услуги</option>
+                <option value="Кредиты">Кредиты</option>
+                <option value="Налоги">Налоги</option>
+                <option value="Штрафы">Штрафы</option>
+                <option value="Другое">Другое</option>
+            </select></p>
+            <p>Введите сумму</p>
+            <input name="amount" type="number" size="40" oninput="limitDecimalPlaces(event, 2)">
             <p>Комментарий</p>
             <input name="comment" type="text" size="40">
             <p><input type="submit" value="Отправить">
@@ -22,4 +48,13 @@
         <input type="submit" value="Выйти">
     </form>
 </body>
+
+<script>
+    function limitDecimalPlaces(e, count) {
+          if (e.target.value.indexOf('.') == -1) { return; }
+          if ((e.target.value.length - e.target.value.indexOf('.')) > count) {
+            e.target.value = parseFloat(e.target.value).toFixed(count);
+          }
+}
+</script>
 </html>

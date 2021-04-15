@@ -18,7 +18,7 @@ public interface RecordRepo extends JpaRepository<Record, Long> {
     List<Record> getRecordsForUser(@Param("user_id") long id);
 
     @Transactional
-    @Query(value = "select sum(amount) from records as a where a.user_id=:user_id and date_part('month', date) = date_part('month', now())", nativeQuery = true)
+    @Query(value = "select sum(amount) from records as a where a.user_id=:user_id and date_trunc('month', date) = date_trunc('month', now())", nativeQuery = true)
     double getSumThisMonth(@Param("user_id") long id);
 
     @Transactional
