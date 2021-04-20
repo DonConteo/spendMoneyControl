@@ -6,9 +6,7 @@ import com.tsoyDmitriy.spendMoneyControl.repository.RecordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RecordService {
@@ -82,5 +80,26 @@ public class RecordService {
             return averageSum/2;
         }
         else return averageSum/3;
+    }
+
+    public Map <String, Double> getSpendsForGraphic(long id) {
+        Map<String, Double> spends = new HashMap<>();
+        List<Record> records = recordRepo.getRecordsForUser(id);
+        try {
+            for (Record x : records) {
+                String purpose = x.getPurpose();
+                double amount = 0;
+                for (Record s : records) {
+                    if (s.getPurpose().equals(purpose)) {
+                        amount += s.getAmount();
+                    }
+                }
+                spends.put(purpose, amount);
+            }
+            return spends;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return spends;
     }
 }

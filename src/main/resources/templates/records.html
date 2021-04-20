@@ -6,7 +6,8 @@
 </head>
 
 <body>
-<a>Здравствуйте, <span th:text="${user}"></span></a>
+    <a>Здравствуйте, <span th:text="${user}"></span></a>
+
     <div th:each="elem : ${records}">
         <p th:text="${elem.purpose}"></p>
         <strong><a th:text="${elem.amount}"></a></strong>
@@ -15,17 +16,25 @@
             <input type="submit" value="Удалить">
         </form>
     </div>
-<form action="logout" method="POST">
-    <input type="submit" value="Выйти">
-</form>
-<div>
-    <a>Траты за текущий месяц</a>
-    <a th:text="${sumThisMonth}"></a>
-    <a>Траты за прошлый месяц</a>
-    <a th:text="${sumLastMonth}"></a>
-    <a>Предполагаемые траты на конец текущего месяца</a>
-    <a th:text="${plannedSpends}"></a>
-</div>
-<a href="records/addRecord">Добавить запись</a>
+
+    <form action="logout" method="POST">
+        <input type="submit" value="Выйти">
+    </form>
+
+    <div>
+        <a>Траты за текущий месяц</a>
+        <a th:text="${sumThisMonth}"></a>
+        <a>Траты за прошлый месяц</a>
+        <a th:text="${sumLastMonth}"></a>
+        <a>Предполагаемые траты на конец текущего месяца</a>
+        <a th:text="${plannedSpends}"></a>
+    </div>
+
+    <a href="records/addRecord">Добавить запись</a>
+
+    <div th:each="elem : ${spends}">
+        <p th:text="${elem.key}"></p>
+        <p th:text="${elem.value}"></p>
+    </div>
 </body>
 </html>

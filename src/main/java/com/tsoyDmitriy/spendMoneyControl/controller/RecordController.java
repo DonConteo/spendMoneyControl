@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("records")
 public class RecordController {
@@ -29,6 +31,7 @@ public class RecordController {
         model.addAttribute("sumThisMonth", recordService.spendThisMonth(user.getId()));
         model.addAttribute("sumLastMonth", recordService.spendLastMonth(user.getId()));
         model.addAttribute("plannedSpends", recordService.getPlannedSpends(user.getId()));
+        model.addAttribute("spends", recordService.getSpendsForGraphic(user.getId()));
         return "records";
     }
 
