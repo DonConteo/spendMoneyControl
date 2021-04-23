@@ -26,10 +26,10 @@
 <body>
     <a>Здравствуйте, <span th:text="${user}"></span></a>
 
+    <a href="records">Траты за текущий месяц</a>
     <a href="spendsLastMonth">Траты за прошлый месяц</a>
-    <a href="spendsAllTime">Траты за все время</a>
 
-    <a>Траты за текущий месяц</a>
+    <a>Траты за все время</a>
 
     <div th:each="elem : ${records}">
         <table width="80%" cellspacing="0" cellpadding="5">
@@ -52,22 +52,11 @@
         </table>
     </div>
 
-    <a href="records/addRecord">Добавить запись</a>
-
-    <a>Траты за текущий месяц по категориям</a>
+    <a>Траты за все время по категориям</a>
     <div th:each="elem : ${spends}">
         <p th:text="${elem.purpose}"></p>
         <p th:text="${elem.amount}"></p>
         <p th:text="${elem.percent}"></p>
-    </div>
-
-    <div>
-        <a>Общие траты за текущий месяц</a>
-        <a th:text="${sumThisMonth}"></a>
-        <a>Общие траты за прошлый месяц</a>
-        <a th:text="${sumLastMonth}"></a>
-        <a>Предполагаемые траты на конец текущего месяца</a>
-        <a th:text="${plannedSpends}"></a>
     </div>
 
     <form action="logout" method="POST">

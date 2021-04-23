@@ -27,17 +27,24 @@ public class RecordController {
     @GetMapping()
     public String showAllRecords(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());
-        model.addAttribute("records", recordService.getRecordsForUser(user.getId()));
+        model.addAttribute("records", recordService.getRecordsForUserThisMonth(user.getId()));
         model.addAttribute("sumThisMonth", recordService.spendThisMonth(user.getId()));
         model.addAttribute("sumLastMonth", recordService.spendLastMonth(user.getId()));
         model.addAttribute("plannedSpends", recordService.getPlannedSpends(user.getId()));
-        model.addAttribute("spends", recordService.getSpendsForGraphic(user.getId()));
+        model.addAttribute("spends", recordService.getRecordDtosThisMonth(user.getId()));
         return "records";
+    }
+
+    @PostMapping("delete/{id}")
+    public String deleteRecord(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
+        recordService.deleteRecord(id);
+        model.addAttribute("records", recordRepo.getRecordsForUser(user.getId()));
+        return "redirect:/records";
     }
 
     @GetMapping("addRecord")
     public String addRecord() {
-        return ("addRecord");
+        return "addRecord";
     }
 
     @PostMapping("addRecord")
@@ -49,10 +56,19 @@ public class RecordController {
         return "redirect:/records";
     }
 
-    @PostMapping("delete/{id}")
-    public String deleteRecord(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
-        recordService.deleteRecord(id);
-        model.addAttribute("records", recordRepo.getRecordsForUser(user.getId()));
-        return "redirect:/records";
+    @GetMapping("spendsLastMonth")
+    public String getSpendsForLastMonth(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user.getUsername());
+        model.addAttribute("records", recordService.getRecordsForUserLastMonth(user.getId()));
+        model.addAttribute("spends", recordService.getRecordDtosLastMonth(user.getId()));
+        return "spendsLastMonth";
+    }
+
+    @GetMapping("spendsAllTime")
+    public String getSpendsForAllTime(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user.getUsername());
+        model.addAttribute("records", recordService.getRecordsForUser(user.getId()));
+        model.addAttribute("spends", recordService.getRecordDtos(user.getId()));
+        return "spendsAllTime";
     }
 }
