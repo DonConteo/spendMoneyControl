@@ -118,76 +118,23 @@ public class RecordService {
 //Получение списка объектов для передачи в виде "категория-сумма-процент" за текущий месяц
     public List<RecordDto> getRecordDtosThisMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserThisMonth(id);
-        Map<String, Double> spends = new HashMap<>();
-        List<RecordDto> recordDtos = new ArrayList<>();
-        for (Record x : records) {
-            String purpose = x.getPurpose();
-            double amount = 0;
-            for (Record s : records) {
-                if (s.getPurpose().equals(purpose)) {
-                    amount += s.getAmount();
-                }
-            }
-            spends.put(purpose, amount);
-        }
-        double sum = 0;
-        for (Map.Entry<String, Double> entry : spends.entrySet()) {
-            sum += entry.getValue();
-        }
-        for (Map.Entry<String, Double> entry : spends.entrySet()) {
-            double percent = entry.getValue() * 100 / sum;
-            DecimalFormat f = new DecimalFormat("##.00");
-            String formate = f.format(percent);
-            double finalValue = 0;
-            try {
-                finalValue = (Double)f.parse(formate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            RecordDto recordDto = new RecordDto(entry.getKey(), entry.getValue(), finalValue);
-            recordDtos.add(recordDto);
-        }
-        return recordDtos;
+        return getRecordDtos(records);
     }
 
-//Получение списка объектов для передачи в виде "категория-сумма-процент" за прошлый месяц
+    //Получение списка объектов для передачи в виде "категория-сумма-процент" за прошлый месяц
+
     public List<RecordDto> getRecordDtosLastMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserLastMonth(id);
-        Map<String, Double> spends = new HashMap<>();
-        List<RecordDto> recordDtos = new ArrayList<>();
-        for (Record x : records) {
-            String purpose = x.getPurpose();
-            double amount = 0;
-            for (Record s : records) {
-                if (s.getPurpose().equals(purpose)) {
-                    amount += s.getAmount();
-                }
-            }
-            spends.put(purpose, amount);
-        }
-        double sum = 0;
-        for (Map.Entry<String, Double> entry : spends.entrySet()) {
-            sum += entry.getValue();
-        }
-        for (Map.Entry<String, Double> entry : spends.entrySet()) {
-            double percent = entry.getValue() * 100 / sum;
-            DecimalFormat f = new DecimalFormat("##.00");
-            String formate = f.format(percent);
-            double finalValue = 0;
-            try {
-                finalValue = (Double)f.parse(formate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            RecordDto recordDto = new RecordDto(entry.getKey(), entry.getValue(), finalValue);
-            recordDtos.add(recordDto);
-        }
-        return recordDtos;
+        return getRecordDtos(records);
     }
-
 //Получение списка объектов для передачи в виде "категория-сумма-процент" за все время
+
     public List<RecordDto> getRecordDtos(long id) {
         List<Record> records = recordRepo.getRecordsForUser(id);
+        return getRecordDtos(records);
+    }
+
+    private List<RecordDto> getRecordDtos(List<Record> records) {
         Map<String, Double> spends = new HashMap<>();
         List<RecordDto> recordDtos = new ArrayList<>();
         for (Record x : records) {
