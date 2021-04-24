@@ -7,8 +7,10 @@ import com.tsoyDmitriy.spendMoneyControl.repository.RecordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -17,32 +19,38 @@ public class RecordService {
     @Autowired
     RecordRepo recordRepo;
 
+//Сохранение записи
     public void saveRecord(String purpose, double amount, String comment, User user) {
         Record record = new Record(purpose, amount, comment, user);
         record.setDate(new Date());
         recordRepo.save(record);
     }
 
+//Удаление записи
     public void deleteRecord(long id) {
         recordRepo.delete(recordRepo.findById(id).orElseThrow());
     }
 
+//Получение всех записей определенного пользователя
     public List<Record> getRecordsForUser(long id) {
         List<Record> records = new ArrayList<>(recordRepo.getRecordsForUser(id));
         return records;
     }
 
+//Получение всех записей пользователя за текущий месяц
     public List<Record> getRecordsForUserThisMonth(long id) {
         List<Record> records = new ArrayList<>(recordRepo.getRecordsForUserThisMonth(id));
         return records;
     }
 
+//Получение всех записей пользователя за прошлый месяц
     public List<Record> getRecordsForUserLastMonth(long id) {
         List<Record> records = new ArrayList<>(recordRepo.getRecordsForUserLastMonth(id));
         return records;
     }
 
-    public double spendThisMonth(long id) {
+//Получение суммы трат пользователя за текущий месяц
+    public double getSpendThisMonth(long id) {
         double spendThisMonth;
         try {
             spendThisMonth = recordRepo.getSumThisMonth(id);
@@ -52,7 +60,8 @@ public class RecordService {
         return spendThisMonth;
     }
 
-    public double spendLastMonth(long id) {
+//Получение суммы трат пользователя за прошлый месяц
+    public double getSpendLastMonth(long id) {
         double spendLastMonth;
         try {
             spendLastMonth = recordRepo.getSumLastMonth(id);
@@ -62,6 +71,18 @@ public class RecordService {
         return spendLastMonth;
     }
 
+//Получение трат пользователя за все время
+    public double getSpendAllTime(long id) {
+        double spendAllTime;
+        try {
+            spendAllTime = recordRepo.getSumAllTime(id);
+        } catch (Exception e) {
+            spendAllTime = 0;
+        }
+        return spendAllTime;
+    }
+
+//Расчет предполагаемых трат на следующий месяц
     public double getPlannedSpends(long id) {
         double spendLastMonth;
         try {
@@ -94,6 +115,7 @@ public class RecordService {
         } else return averageSum / 3;
     }
 
+//Получение списка объектов для передачи в виде "категория-сумма-процент" за текущий месяц
     public List<RecordDto> getRecordDtosThisMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserThisMonth(id);
         Map<String, Double> spends = new HashMap<>();
@@ -128,6 +150,7 @@ public class RecordService {
         return recordDtos;
     }
 
+//Получение списка объектов для передачи в виде "категория-сумма-процент" за прошлый месяц
     public List<RecordDto> getRecordDtosLastMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserLastMonth(id);
         Map<String, Double> spends = new HashMap<>();
@@ -162,6 +185,7 @@ public class RecordService {
         return recordDtos;
     }
 
+//Получение списка объектов для передачи в виде "категория-сумма-процент" за все время
     public List<RecordDto> getRecordDtos(long id) {
         List<Record> records = recordRepo.getRecordsForUser(id);
         Map<String, Double> spends = new HashMap<>();

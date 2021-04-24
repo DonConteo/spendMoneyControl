@@ -4,46 +4,69 @@
     <meta charset="UTF-8">
     <title th:text="${title}"/>
     <style>
-        #purpose {
-            width: 20%;
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: auto;
+        }
+        td {
             border: 2px solid #000;
-         }
-         #amount {
-            width: 20%;
-            border: 2px solid #000;
-         }
-         #comment {
-            width: 50%;
-            border: 2px solid #000;
-         }
-         #delete {
-            width: 10%;
-            border: 2px solid #000;
-         }
+        }
     </style>
 </head>
 
 <body>
-    <a>Здравствуйте, <span th:text="${user}"></span></a>
 
     <a href="spendsLastMonth">Траты за прошлый месяц</a>
     <a href="spendsAllTime">Траты за все время</a>
 
-    <a>Траты за текущий месяц</a>
+    <p align="center">Здравствуйте, <strong><span th:text="${user} + '!'"></span></strong></p>
 
-    <div th:each="elem : ${records}">
-        <table width="80%" cellspacing="0" cellpadding="5">
-            <tr>
-                <td id="amount">
-                    <strong><a th:text="${elem.amount}"></a></strong>
-                </td>
-                <td id="purpose">
+    <p align="center">Траты за текущий месяц по категориям</p>
+
+    <div>
+        <table>
+            <tr th:each="elem : ${spends}">
+                <td width="50%">
                     <a th:text="${elem.purpose}"></a>
                 </td>
-                <td id="comment">
+                <td width="25%">
+                    <strong><a th:text="${elem.amount}"></a></strong>
+                </td>
+                <td width="25%">
+                    <a th:text="${elem.percent} + ' %'"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <a>Общие траты за текущий месяц: </a>
+        <strong><a th:text="${sumThisMonth}"></a></strong><br>
+        <a>Общие траты за прошлый месяц: </a>
+        <strong><a th:text="${sumLastMonth}"></a></strong><br>
+        <a>Предполагаемые траты на конец текущего месяца: </a>
+        <strong><a th:text="${plannedSpends}"></a></strong><br>
+    </div>
+
+    <p align="center">Траты за текущий месяц</p>
+
+    <div>
+        <table>
+            <tr th:each="elem : ${records}">
+                <td width="20%">
+                    <strong><a th:text="${elem.amount}"></a></strong>
+                </td>
+                <td width="20%">
+                    <a th:text="${elem.purpose}"></a>
+                </td>
+                <td width="10%">
+                    <a th:text="${elem.date}"></a>
+                </td>
+                <td width="40%">
                     <a th:text="${elem.comment}"></a>
                 </td>
-                <td id="delete">
+                <td width="10%">
                     <form th:action="'/records' + '/delete/' + ${elem.id}" method="POST">
                         <button type="submit">Удалить</button>
                     </form>
@@ -53,22 +76,6 @@
     </div>
 
     <a href="records/addRecord">Добавить запись</a>
-
-    <a>Траты за текущий месяц по категориям</a>
-    <div th:each="elem : ${spends}">
-        <p th:text="${elem.purpose}"></p>
-        <p th:text="${elem.amount}"></p>
-        <p th:text="${elem.percent}"></p>
-    </div>
-
-    <div>
-        <a>Общие траты за текущий месяц</a>
-        <a th:text="${sumThisMonth}"></a>
-        <a>Общие траты за прошлый месяц</a>
-        <a th:text="${sumLastMonth}"></a>
-        <a>Предполагаемые траты на конец текущего месяца</a>
-        <a th:text="${plannedSpends}"></a>
-    </div>
 
     <form action="logout" method="POST">
         <input type="submit" value="Выйти">
