@@ -84,35 +84,29 @@ public class RecordService {
 
 //Расчет предполагаемых трат на следующий месяц
     public double getPlannedSpends(long id) {
-        double spendLastMonth;
+        double spendLastMonth = 0.0;
+        double spendLastSecondMonth = 0.0;
+        double spendLastThirdMonth = 0.0;
+        double divider = 1L;
+
         try {
-            spendLastMonth = recordRepo.getSumLastMonth(id);
+            spendLastMonth = recordRepo.getSumLastMonth(id);//1
+            spendLastSecondMonth = recordRepo.getSumLastSecondMonth(id);//1
+            spendLastThirdMonth = recordRepo.getSumLastThirdMonth(id);//0
+
         } catch (Exception e) {
-            spendLastMonth = 0;
+            e.printStackTrace();
         }
 
-        double spendLastSecondMonth;
-        try {
-            spendLastSecondMonth = recordRepo.getSumLastSecondMonth(id);
-        } catch (Exception e) {
-            spendLastSecondMonth = 0;
+        if (spendLastThirdMonth != 0 && spendLastSecondMonth != 0){
+            divider = 3L;
+        } else if (spendLastThirdMonth == 0 && spendLastSecondMonth != 0){
+            divider = 2L;
+        } else if (spendLastThirdMonth == 0 && spendLastSecondMonth == 0){
+            divider = 1L;
         }
 
-        double spendLastThirdMonth;
-        try {
-            spendLastThirdMonth = recordRepo.getSumLastThirdMonth(id);
-        } catch (Exception e) {
-            spendLastThirdMonth = 0;
-        }
-
-        double averageSum = spendLastMonth + spendLastSecondMonth + spendLastThirdMonth;
-
-        if (spendLastThirdMonth == 0 && spendLastSecondMonth == 0) {
-            return averageSum;
-        }
-        if (spendLastThirdMonth == 0) {
-            return averageSum / 2;
-        } else return averageSum / 3;
+        return (spendLastMonth + spendLastSecondMonth + spendLastThirdMonth) / divider;
     }
 
 //Получение списка объектов для передачи в виде "категория-сумма-процент" за текущий месяц
