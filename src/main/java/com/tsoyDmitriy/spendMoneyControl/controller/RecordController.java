@@ -4,6 +4,7 @@ import com.tsoyDmitriy.spendMoneyControl.model.User;
 import com.tsoyDmitriy.spendMoneyControl.repository.RecordRepo;
 import com.tsoyDmitriy.spendMoneyControl.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +24,14 @@ public class RecordController {
 
 //Главная страница
     @GetMapping("records")
-    public String showAllRecords(@AuthenticationPrincipal User user, Model model) {
+    public ResponseEntity<String> showAllRecords(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());
         model.addAttribute("records", recordService.getRecordsForUserThisMonth(user.getId()));
         model.addAttribute("sumThisMonth", recordService.getSpendThisMonth(user.getId()));
         model.addAttribute("sumLastMonth", recordService.getSpendLastMonth(user.getId()));
         model.addAttribute("plannedSpends", recordService.getPlannedSpends(user.getId()));
         model.addAttribute("spends", recordService.getRecordDtosThisMonth(user.getId()));
-        return "records";
+        return ResponseEntity.ok("records");
     }
 
 //Удаление записи
