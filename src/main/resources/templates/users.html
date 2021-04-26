@@ -9,6 +9,7 @@
 <div th:each="elem : ${users}">
     <p th:text="${elem.id}"></p>
     <strong><a th:text="${elem.username}"></a></strong>
+    <p th:text="${elem.role}"></p>
     <form th:action="'/users' + '/delete/' + ${elem.id}" method="POST">
         <input type="submit" value="Удалить">
     </form>

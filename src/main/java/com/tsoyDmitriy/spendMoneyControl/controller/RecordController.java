@@ -33,7 +33,6 @@ public class RecordController {
         return "records";
     }
 
-//Удаление записи
     @PostMapping("records/delete/{id}")
     public String deleteRecord(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
         recordService.deleteRecord(id);
@@ -41,7 +40,6 @@ public class RecordController {
         return "redirect:/records";
     }
 
-//Добавление записи
     @GetMapping("records/addRecord")
     public String addRecord() {
         return "addRecord";
@@ -56,7 +54,6 @@ public class RecordController {
         return "redirect:/records";
     }
 
-//Страница трат за прошлый месяц
     @GetMapping("spendsLastMonth")
     public String getSpendsForLastMonth(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());
@@ -66,7 +63,6 @@ public class RecordController {
         return "spendsLastMonth";
     }
 
-//Страница трат за все время
     @GetMapping("spendsAllTime")
     public String getSpendsForAllTime(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());

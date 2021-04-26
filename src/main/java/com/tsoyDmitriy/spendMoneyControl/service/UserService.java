@@ -1,7 +1,9 @@
 package com.tsoyDmitriy.spendMoneyControl.service;
 
+import com.tsoyDmitriy.spendMoneyControl.Dto.UserDto;
 import com.tsoyDmitriy.spendMoneyControl.model.Role;
 import com.tsoyDmitriy.spendMoneyControl.model.User;
+import com.tsoyDmitriy.spendMoneyControl.repository.RoleRepo;
 import com.tsoyDmitriy.spendMoneyControl.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,10 +21,25 @@ public class UserService implements UserDetailsService {
     UserRepo userRepo;
 
     @Autowired
+    RoleRepo roleRepo;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> findAll() {
-        return userRepo.findAll();
+    public List<UserDto> findAll() {
+        List<User> list = new ArrayList<>(userRepo.findAll());
+        List<UserDto> userDtos = new ArrayList<>();
+        for(User x : list) {
+            long id = x.getId();
+            String username = x.getUsername();
+            Set<Role> roles = roleRepo.getRolesForUser(id);
+            String role = "";
+            for(Role s : roles) {
+                role += s.getName() + " ";
+            }
+            userDtos.add(new UserDto(id, username, role));
+        }
+        return userDtos;
     }
 
     public Optional<User> getUser(long id) {
@@ -36,16 +51,12 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(new Role(1L, "USER")));
         userRepo.save(user);
     }
 
     public void deleteUser(long id) {
         userRepo.deleteById(id);
-    }
-
-    public void deleteAll(){
-        userRepo.deleteAll();
     }
 
     @Override

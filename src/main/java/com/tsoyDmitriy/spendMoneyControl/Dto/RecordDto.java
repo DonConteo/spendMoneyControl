@@ -1,4 +1,4 @@
-package com.tsoyDmitriy.spendMoneyControl.model;
+package com.tsoyDmitriy.spendMoneyControl.Dto;
 
 public class RecordDto {
 
