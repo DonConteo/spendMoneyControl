@@ -9,7 +9,6 @@ public class UserDto {
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
@@ -17,7 +16,6 @@ public class UserDto {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -25,7 +23,6 @@ public class UserDto {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String name) {
         this.username = name;
     }

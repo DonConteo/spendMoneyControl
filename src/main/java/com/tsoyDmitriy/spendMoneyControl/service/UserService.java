@@ -19,10 +19,8 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepo;
-
     @Autowired
     RoleRepo roleRepo;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -40,11 +38,6 @@ public class UserService implements UserDetailsService {
             userDtos.add(new UserDto(id, username, role));
         }
         return userDtos;
-    }
-
-    public Optional<User> getUser(long id) {
-        Optional<User> user = userRepo.findById(id);
-        return user;
     }
 
     public void saveUser(String username, String password){

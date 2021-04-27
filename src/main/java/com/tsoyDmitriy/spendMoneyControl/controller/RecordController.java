@@ -21,7 +21,6 @@ public class RecordController {
         this.recordService = recordService;
     }
 
-//Главная страница
     @GetMapping("records")
     public String showAllRecords(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user.getUsername());

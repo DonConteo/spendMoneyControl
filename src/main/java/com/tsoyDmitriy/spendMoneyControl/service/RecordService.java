@@ -72,7 +72,6 @@ public class RecordService {
         return spendAllTime;
     }
 
-//Расчет предполагаемых трат на следующий месяц
     public double getPlannedSpends(long id) {
         double spendLastMonth = 0.0;
         double spendLastSecondMonth = 0.0;
@@ -99,19 +98,16 @@ public class RecordService {
         return (spendLastMonth + spendLastSecondMonth + spendLastThirdMonth) / divider;
     }
 
-//Получение списка объектов для передачи в виде "категория-сумма-процент" за текущий месяц
     public List<RecordDto> getRecordDtosThisMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserThisMonth(id);
         return getRecordDtos(records);
     }
 
-//Получение списка объектов для передачи в виде "категория-сумма-процент" за прошлый месяц
     public List<RecordDto> getRecordDtosLastMonth(long id) {
         List<Record> records = recordRepo.getRecordsForUserLastMonth(id);
         return getRecordDtos(records);
     }
 
-//Получение списка объектов для передачи в виде "категория-сумма-процент" за все время
     public List<RecordDto> getRecordDtos(long id) {
         List<Record> records = recordRepo.getRecordsForUser(id);
         return getRecordDtos(records);
